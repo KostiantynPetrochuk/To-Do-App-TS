@@ -15,11 +15,12 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Alert } from './Notice';
 
+import { Ttask } from '../types/types';
 
 export default function TasksList() {
 	const [checked, setChecked] = useState([0]);
 
-	const handleToggle = (value) => () => {
+	const handleToggle = (value: number) => () => {
 		const currentIndex = checked.indexOf(value);
 		const newChecked = [...checked];
 
@@ -40,7 +41,7 @@ export default function TasksList() {
 	if (tasksList.length > 0) {
 		return (
 			<List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-				{tasksList.map((task) => {
+				{tasksList.map((task: Ttask) => {
 					const labelId = `checkbox-list-label-${task.id}`;
 					const textDecoration = task.status ? "line-through" : "none";
 

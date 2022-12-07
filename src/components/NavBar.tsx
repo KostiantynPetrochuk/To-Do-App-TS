@@ -11,7 +11,7 @@ import { setFilter } from '../store/actions/filtersActions';
 export default function NavBar() {
 	const [value, setValue] = useState(0);
 
-	const handleChange = (event, newValue) => {
+	const handleChange = (event: React.SyntheticEvent<Element, Event>, newValue: number) => {
 		setValue(newValue);
 	};
 

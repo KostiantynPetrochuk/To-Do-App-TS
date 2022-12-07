@@ -9,15 +9,17 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
+import { THandleClose } from './Notice';
+
 export default function InputForm() {
 	const dispatch = useDispatch();
 	const [openAddSuccess, setOpenAddSuccess] = useState(false);
 	const [openSaveSuccess, setOpenSaveSuccess] = useState(false);
 	const [openWarning, setOpenWarning] = useState(false);
 
-	const handleSubmit = (event) => {
+	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		const taskBody = event.target.body.value.trim();
+		const taskBody = event.currentTarget.body.value.trim();
 		if (taskBody.length >= 5 && taskBody.length <= 30) {
 			dispatch(addTask(taskBody));
 			handleOpenAddSuccess();
@@ -25,7 +27,7 @@ export default function InputForm() {
 			handleOpenWarning();
 		}
 
-		event.target.reset();
+		event.currentTarget.reset();
 	}
 
 	const tasksList = useSelector(state => selectAllTasks(state));
@@ -46,7 +48,7 @@ export default function InputForm() {
 		setOpenAddSuccess(true);
 	};
 
-	const handleCloseAddSuccess = (event, reason) => {
+	const handleCloseAddSuccess: THandleClose = (event, reason) => {
 		if (reason === 'clickaway') {
 			return;
 		}
@@ -57,7 +59,7 @@ export default function InputForm() {
 		setOpenSaveSuccess(true);
 	};
 
-	const handleCloseSaveSuccess = (event, reason) => {
+	const handleCloseSaveSuccess: THandleClose = (event, reason) => {
 		if (reason === 'clickaway') {
 			return;
 		}
@@ -68,7 +70,7 @@ export default function InputForm() {
 		setOpenWarning(true);
 	};
 
-	const handleCloseWarning = (event, reason) => {
+	const handleCloseWarning: THandleClose = (event, reason) => {
 		if (reason === 'clickaway') {
 			return;
 		}

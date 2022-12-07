@@ -1,5 +1,7 @@
 import { ADD_TASK, DELETE_TASK, TOGGLE_STATUS } from "../constants/tasksConst";
 
+import { Ttask } from "../../types/types";
+
 export const tasksReducer = (state = [], action) => { //reducer
 	switch (action.type) {
 		case ADD_TASK: {
@@ -13,10 +15,10 @@ export const tasksReducer = (state = [], action) => { //reducer
 			]
 		}
 		case DELETE_TASK: {
-			return state.filter((task) => task.id !== action.id);
+			return state.filter((task: Ttask) => task.id !== action.id);
 		}
 		case TOGGLE_STATUS: {
-			return state.map(task => (
+			return state.map((task: Ttask) => (
 				task.id === action.id
 					? {
 						...task,
