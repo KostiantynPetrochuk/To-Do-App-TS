@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../hooks';
 
 import { selectVisibleTasks } from '../store/selectors/tasksSelectors';
 import { selectActiveFilter } from '../store/selectors/filterSelectors';
@@ -36,9 +36,9 @@ export default function TasksList() {
 	};
 
 
-	const dispatch = useDispatch();
-	const activeFilter = useSelector(selectActiveFilter);
-	const tasksList = useSelector((state: StateType) => selectVisibleTasks(state, activeFilter));
+	const dispatch = useAppDispatch();
+	const activeFilter = useAppSelector(selectActiveFilter);
+	const tasksList = useAppSelector((state: StateType) => selectVisibleTasks(state, activeFilter));
 
 	if (tasksList.length > 0) {
 		return (

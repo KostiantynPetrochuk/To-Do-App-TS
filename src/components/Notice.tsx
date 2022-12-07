@@ -1,4 +1,4 @@
-import Snackbar, { SnackbarCloseReason } from '@mui/material/Snackbar';
+import Snackbar from '@mui/material/Snackbar';
 import { forwardRef } from 'react';
 
 import MuiAlert, { AlertColor, AlertProps } from '@mui/material/Alert';

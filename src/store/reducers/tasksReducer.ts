@@ -6,7 +6,7 @@ const initialState: Array<TaskType> = [];
 
 type TasksReducerActionTypes = AddTaskActionType | ToggleStatusActionType | DeleteTaskActionType;
 
-export const tasksReducer = (state = initialState, action: TasksReducerActionTypes) => { //reducer
+export const tasksReducer = (state = initialState, action: TasksReducerActionTypes) => {
 	switch (action.type) {
 		case ADD_TASK: {
 			return [

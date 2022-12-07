@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../hooks';
 
 import { addTask } from '../store/actions/tasksActions';
 import { selectAllTasks } from '../store/selectors/tasksSelectors';
@@ -13,7 +13,7 @@ import { THandleClose } from './Notice';
 
 import { StateType } from '../types/types';
 export default function InputForm() {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const [openAddSuccess, setOpenAddSuccess] = useState(false);
 	const [openSaveSuccess, setOpenSaveSuccess] = useState(false);
 	const [openWarning, setOpenWarning] = useState(false);
@@ -31,7 +31,7 @@ export default function InputForm() {
 		event.currentTarget.reset();
 	}
 
-	const tasksList = useSelector((state: StateType) => selectAllTasks((state)));
+	const tasksList = useAppSelector((state: StateType) => selectAllTasks((state)));
 
 	const storeTasks = { tasks: tasksList };
 	const handleSaveTasks = () => {

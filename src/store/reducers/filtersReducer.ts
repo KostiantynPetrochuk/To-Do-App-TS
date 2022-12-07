@@ -1,7 +1,10 @@
 import { SET_FILTER } from "../constants/filtersConst";
 import { SetFilterActionType } from "../actions/filtersActions";
+import { FiltersType } from "../../types/types";
 
-export const filtersReducer = (state = "all", action: SetFilterActionType) => {
+const initialState: FiltersType = "all";
+
+export const filtersReducer = (state = initialState, action: SetFilterActionType) => {
 	switch (action.type) {
 		case SET_FILTER: {
 			return action.filter;

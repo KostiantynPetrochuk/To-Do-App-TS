@@ -4,7 +4,7 @@ import Tab from '@mui/material/Tab';
 import Divider from '@mui/material/Divider';
 
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../hooks';
 
 import { setFilter } from '../store/actions/filtersActions';
 
@@ -15,7 +15,7 @@ export default function NavBar() {
 		setValue(newValue);
 	};
 
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 
 	return (
 		<Box sx={{ width: '100%' }}>
