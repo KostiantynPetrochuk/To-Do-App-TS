@@ -15,12 +15,12 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Alert } from './Notice';
 
-import { TaskType } from '../types/types';
+import { FiltersType, TaskType } from '../types/types';
 
 import { StateType } from '../types/types';
 
-export default function TasksList() {
-	const [checked, setChecked] = useState([0]);
+const TasksList: React.FC = () => {
+	const [checked, setChecked] = useState<Array<number>>([0]);
 
 	const handleToggle = (value: number) => () => {
 		const currentIndex = checked.indexOf(value);
@@ -35,16 +35,15 @@ export default function TasksList() {
 		setChecked(newChecked);
 	};
 
-
 	const dispatch = useAppDispatch();
-	const activeFilter = useAppSelector(selectActiveFilter);
-	const tasksList = useAppSelector((state: StateType) => selectVisibleTasks(state, activeFilter));
+	const activeFilter: FiltersType = useAppSelector(selectActiveFilter);
+	const tasksList: Array<TaskType> = useAppSelector((state: StateType) => selectVisibleTasks(state, activeFilter));
 
 	if (tasksList.length > 0) {
 		return (
 			<List sx={{ width: '100%', bgcolor: 'background.paper' }}>
 				{tasksList.map((task: TaskType) => {
-					const labelId = `checkbox-list-label-${task.id}`;
+					const labelId: string = `checkbox-list-label-${task.id}`;
 					const textDecoration = task.status ? "line-through" : "none";
 
 					return (
@@ -83,4 +82,6 @@ export default function TasksList() {
 	} else {
 		return <Alert sx={{ marginTop: 5 }} severity="info">There is no task here!</Alert>
 	}
-}
+};
+
+export default TasksList;

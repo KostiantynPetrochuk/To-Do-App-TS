@@ -8,10 +8,10 @@ import { useAppDispatch } from '../hooks';
 
 import { setFilter } from '../store/actions/filtersActions';
 
-export default function NavBar() {
-	const [value, setValue] = useState(0);
+const NavBar: React.FC = () => {
+	const [value, setValue] = useState<number>(0);
 
-	const handleChange = (event: React.SyntheticEvent<Element, Event>, newValue: number) => {
+	const handleChange = (event: React.SyntheticEvent<Element, Event>, newValue: number): void => {
 		setValue(newValue);
 	};
 
@@ -28,4 +28,6 @@ export default function NavBar() {
 			<Divider />
 		</Box>
 	);
-}
+};
+
+export default NavBar;

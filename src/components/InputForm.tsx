@@ -1,3 +1,4 @@
+import { FormEvent } from "react";
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks';
 
@@ -12,120 +13,124 @@ import Button from '@mui/material/Button';
 import { THandleClose } from './Notice';
 
 import { StateType } from '../types/types';
-export default function InputForm() {
-	const dispatch = useAppDispatch();
-	const [openAddSuccess, setOpenAddSuccess] = useState(false);
-	const [openSaveSuccess, setOpenSaveSuccess] = useState(false);
-	const [openWarning, setOpenWarning] = useState(false);
+import { TaskType } from "../types/types";
 
-	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
-		const taskBody = event.currentTarget.body.value.trim();
-		if (taskBody.length >= 5 && taskBody.length <= 30) {
-			dispatch(addTask(taskBody));
-			handleOpenAddSuccess();
-		} else {
-			handleOpenWarning();
-		}
+const InputForm: React.FC = () => {
+    const dispatch = useAppDispatch();
+    const [openAddSuccess, setOpenAddSuccess] = useState<boolean>(false);
+    const [openSaveSuccess, setOpenSaveSuccess] = useState<boolean>(false);
+    const [openWarning, setOpenWarning] = useState<boolean>(false);
 
-		event.currentTarget.reset();
-	}
+    const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
+        event.preventDefault();
+        const taskBody: string = event.currentTarget.body.value.trim();
+        if (taskBody.length >= 5 && taskBody.length <= 30) {
+            dispatch(addTask(taskBody));
+            handleOpenAddSuccess();
+        } else {
+            handleOpenWarning();
+        }
 
-	const tasksList = useAppSelector((state: StateType) => selectAllTasks((state)));
+        event.currentTarget.reset();
+    }
 
-	const storeTasks = { tasks: tasksList };
-	const handleSaveTasks = () => {
+    const tasksList: Array<TaskType> = useAppSelector((state: StateType) => selectAllTasks((state)));
 
-		try {
-			const stateToBeSaved = JSON.stringify(storeTasks);
-			localStorage.setItem("state", stateToBeSaved);
-			handleOpenSaveSuccess();
-		} catch (error) {
-			console.error(error);
-		}
-	}
-	//--------------messages-add-success-------------------
-	const handleOpenAddSuccess = () => {
-		setOpenAddSuccess(true);
-	};
+    const storeTasks = { tasks: tasksList };
+    const handleSaveTasks = (): void => {
 
-	const handleCloseAddSuccess: THandleClose = (event, reason) => {
-		if (reason === 'clickaway') {
-			return;
-		}
-		setOpenAddSuccess(false);
-	};
-	//-------------messages-save-success---------------------
-	const handleOpenSaveSuccess = () => {
-		setOpenSaveSuccess(true);
-	};
+        try {
+            const stateToBeSaved: string = JSON.stringify(storeTasks);
+            localStorage.setItem("state", stateToBeSaved);
+            handleOpenSaveSuccess();
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    //--------------messages-add-success-------------------
+    const handleOpenAddSuccess = (): void => {
+        setOpenAddSuccess(true);
+    };
 
-	const handleCloseSaveSuccess: THandleClose = (event, reason) => {
-		if (reason === 'clickaway') {
-			return;
-		}
-		setOpenSaveSuccess(false);
-	};
-	//--------------warning-message--------------------------
-	const handleOpenWarning = () => {
-		setOpenWarning(true);
-	};
+    const handleCloseAddSuccess: THandleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenAddSuccess(false);
+    };
+    //-------------messages-save-success---------------------
+    const handleOpenSaveSuccess = (): void => {
+        setOpenSaveSuccess(true);
+    };
 
-	const handleCloseWarning: THandleClose = (event, reason) => {
-		if (reason === 'clickaway') {
-			return;
-		}
-		setOpenWarning(false);
-	};
+    const handleCloseSaveSuccess: THandleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenSaveSuccess(false);
+    };
+    //--------------warning-message--------------------------
+    const handleOpenWarning = (): void => {
+        setOpenWarning(true);
+    };
 
-	return (
-		<Box
-			component="form"
-			sx={{
-				'& > :not(style)': { m: 1, },
-			}}
-			noValidate
-			autoComplete="off"
-			onSubmit={handleSubmit}>
-			<TextField
-				id="outlined-basic"
-				label="New Task"
-				variant="outlined"
-				name='body'
-				fullWidth />
-			<Button
-				type='submit'
-				variant="contained"
-				sx={{ marginTop: 50 }} >
-				Add
-			</ Button>
-			<Button
-				variant="contained"
-				color="success"
-				onClick={handleSaveTasks}>
-				Save
-			</Button>
+    const handleCloseWarning: THandleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenWarning(false);
+    };
 
-			<Notice
-				openNotice={openAddSuccess}
-				handleCloseNotice={handleCloseAddSuccess}
-				noticeBody="Task successfully added!"
-				severity="info"
-			/>
+    return (
+        <Box
+            component="form"
+            sx={{
+                '& > :not(style)': { m: 1, },
+            }}
+            noValidate
+            autoComplete="off"
+            onSubmit={handleSubmit} >
+            <TextField
+                id="outlined-basic"
+                label="New Task"
+                variant="outlined"
+                name='body'
+                fullWidth />
+            <Button
+                type='submit'
+                variant="contained"
+                sx={{ marginTop: 50 }}>
+                Add
+            </ Button>
+            <Button
+                variant="contained"
+                color="success"
+                onClick={handleSaveTasks}>
+                Save
+            </Button>
 
-			<Notice
-				openNotice={openSaveSuccess}
-				handleCloseNotice={handleCloseSaveSuccess}
-				noticeBody="Task successfully saved!"
-				severity="success"
-			/>
+            <Notice
+                openNotice={openAddSuccess}
+                handleCloseNotice={handleCloseAddSuccess}
+                noticeBody="Task successfully added!"
+                severity="info"
+            />
 
-			<Notice
-				openNotice={openWarning}
-				handleCloseNotice={handleCloseWarning}
-				noticeBody="The body of the task should be between 5 and 30 characters!"
-				severity="warning"
-			/>
-		</Box>
-	);
+            <Notice
+                openNotice={openSaveSuccess}
+                handleCloseNotice={handleCloseSaveSuccess}
+                noticeBody="Task successfully saved!"
+                severity="success"
+            />
+
+            <Notice
+                openNotice={openWarning}
+                handleCloseNotice={handleCloseWarning}
+                noticeBody="The body of the task should be between 5 and 30 characters!"
+                severity="warning"
+            />
+        </Box >
+    );
 }
+
+export default InputForm;

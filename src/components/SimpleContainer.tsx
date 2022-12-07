@@ -7,7 +7,7 @@ import NavBar from './NavBar';
 import TasksList from './TasksList';
 
 
-function SimpleContainer() {
+const SimpleContainer: React.FC = () => {
 	return (
 		<>
 			<CssBaseline />

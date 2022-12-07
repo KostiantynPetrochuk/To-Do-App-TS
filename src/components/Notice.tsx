@@ -1,5 +1,5 @@
 import Snackbar from '@mui/material/Snackbar';
-import { forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 
 import MuiAlert, { AlertColor, AlertProps } from '@mui/material/Alert';
 
@@ -16,7 +16,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(props
 	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export const Notice = (props: TNoticeProps) => {
+export const Notice: React.FC<TNoticeProps> = (props: TNoticeProps) => {
 	const { openNotice, handleCloseNotice, noticeBody, severity } = props;
 	return (
 		<Snackbar open={openNotice} autoHideDuration={6000} onClose={handleCloseNotice}>
@@ -26,3 +26,4 @@ export const Notice = (props: TNoticeProps) => {
 		</Snackbar>
 	)
 };
+

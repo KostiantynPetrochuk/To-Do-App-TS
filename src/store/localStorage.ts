@@ -1,14 +1,21 @@
-export const loadState = () => {
+import { TaskType } from "../types/types";
+
+type LoadStateReturnType = {
+	tasks: Array<TaskType>;
+}
+
+export const loadState = (): LoadStateReturnType => {
 	try {
-		const savedState = localStorage.getItem("state");
+		const savedState: string | null = localStorage.getItem("state");
 
 		if (savedState === null) {
-			return [];
+			return { tasks: [] };
 		}
 
 		return JSON.parse(savedState);
 
 	} catch (error) {
-		return undefined;
+		console.log(error);
+		return { tasks: [] };
 	}
 };
