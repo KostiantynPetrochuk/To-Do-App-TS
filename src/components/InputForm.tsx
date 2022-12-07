@@ -11,6 +11,7 @@ import Button from '@mui/material/Button';
 
 import { THandleClose } from './Notice';
 
+import { StateType } from '../types/types';
 export default function InputForm() {
 	const dispatch = useDispatch();
 	const [openAddSuccess, setOpenAddSuccess] = useState(false);
@@ -30,7 +31,7 @@ export default function InputForm() {
 		event.currentTarget.reset();
 	}
 
-	const tasksList = useSelector(state => selectAllTasks(state));
+	const tasksList = useSelector((state: StateType) => selectAllTasks((state)));
 
 	const storeTasks = { tasks: tasksList };
 	const handleSaveTasks = () => {

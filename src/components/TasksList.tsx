@@ -15,7 +15,9 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Alert } from './Notice';
 
-import { Ttask } from '../types/types';
+import { TaskType } from '../types/types';
+
+import { StateType } from '../types/types';
 
 export default function TasksList() {
 	const [checked, setChecked] = useState([0]);
@@ -36,12 +38,12 @@ export default function TasksList() {
 
 	const dispatch = useDispatch();
 	const activeFilter = useSelector(selectActiveFilter);
-	const tasksList = useSelector(state => selectVisibleTasks(state, activeFilter));
+	const tasksList = useSelector((state: StateType) => selectVisibleTasks(state, activeFilter));
 
 	if (tasksList.length > 0) {
 		return (
 			<List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-				{tasksList.map((task: Ttask) => {
+				{tasksList.map((task: TaskType) => {
 					const labelId = `checkbox-list-label-${task.id}`;
 					const textDecoration = task.status ? "line-through" : "none";
 
