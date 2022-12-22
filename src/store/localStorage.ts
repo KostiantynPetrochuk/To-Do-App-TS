@@ -5,17 +5,17 @@ type LoadStateReturnType = {
 }
 
 export const loadState = (): LoadStateReturnType => {
-	try {
-		const savedState: string | null = localStorage.getItem("state");
+  try {
+    const savedState: string | null = localStorage.getItem("state");
 
-		if (savedState === null) {
-			return { tasks: [] };
-		}
+    if (savedState === null) {
+      return { tasks: [] };
+    }
 
-		return JSON.parse(savedState);
+    return JSON.parse(savedState);
 
-	} catch (error) {
-		console.log(error);
-		return { tasks: [] };
-	}
+  } catch (error) {
+    console.log(error);
+    return { tasks: [] };
+  }
 };

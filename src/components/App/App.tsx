@@ -1,5 +1,5 @@
-import SimpleContainer from '../SimpleContainer';
-import './App.css';
+import SimpleContainer from "../SimpleContainer";
+import "./App.css";
 
 
 const App: React.FC = () => {
@@ -8,6 +8,6 @@ const App: React.FC = () => {
       <SimpleContainer />
     </div>
   );
-}
+};
 
 export default App;
