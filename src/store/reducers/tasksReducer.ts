@@ -6,6 +6,7 @@ import {
   DeleteTaskActionType,
 } from "../actions/tasksActions";
 import { addTask, toggleStatus, deleteTask } from "../actions/tasksActions";
+import { createReducer } from "@reduxjs/toolkit";
 
 const initialState: Array<TaskType> = [];
 
@@ -14,31 +15,18 @@ type TasksReducerActionTypes =
   | ToggleStatusActionType
   | DeleteTaskActionType;
 
-export const tasksReducer = (state = initialState, action: any) => {
-  switch (action.type) {
-    case addTask.toString(): {
-      return [
-        ...state,
-        {
-          ...action.payload,
-        },
-      ];
-    }
-    case deleteTask.toString(): {
-      return state.filter((task: TaskType) => task.id !== action.payload.id);
-    }
-    case toggleStatus.toString(): {
-      return state.map((task: TaskType) =>
-        task.id === action.payload.id
-          ? {
-              ...task,
-              status: !task.status,
-            }
-          : task
-      );
-    }
-
-    default:
-      return state;
-  }
-};
+export const tasksReducer = createReducer(initialState, (builder) => {
+  builder
+    .addCase(addTask, (state, action) => {
+      state.push(action.payload);
+    })
+    .addCase(toggleStatus, (state, action) => {
+      const id = action.payload.id;
+      const task: TaskType = state.find((task) => task.id === id)!;
+      task.status = !task.status;
+    })
+    .addCase(deleteTask, (state, action) => {
+      const id = action.payload.id;
+      return state.filter((task) => task.id !== id);
+    });
+});
