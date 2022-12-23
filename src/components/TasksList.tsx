@@ -1,41 +1,14 @@
-// import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../hooks";
-
-import { selectVisibleTasks } from "../store/selectors/tasksSelectors";
-import { selectActiveFilter } from "../store/selectors/filterSelectors";
-import { deleteTask, toggleStatus } from "../store/actions/tasksActions";
+import React, { useMemo } from "react";
 
 import List from "@mui/material/List";
 
+import { useAppDispatch, useAppSelector } from "../hooks";
+import { selectVisibleTasks } from "../store/selectors/tasksSelectors";
+import { selectActiveFilter } from "../store/selectors/filterSelectors";
+import { deleteTask, toggleStatus } from "../store/actions/tasksActions";
 import { Alert } from "./Notice";
-
-import { FiltersType, TaskType } from "../types/types";
-
-import { StateType } from "../types/types";
+import { FiltersType, TaskType, StateType } from "../types/types";
 import Task from "./Task";
-import React from "react";
-
-//helpers
-const getId = (target: HTMLElement): string => {
-  const element = target;
-  const elementId = element.dataset.id;
-
-  if (elementId) {
-    return elementId;
-  }
-  return getId(element.parentNode as HTMLElement);
-};
-//---
-const getCommand = (target: HTMLElement): string => {
-  const element = target;
-  const elementCommand = element.dataset.command;
-
-  if (elementCommand) {
-    return elementCommand;
-  }
-  return getCommand(element.parentNode as HTMLElement);
-};
-//---
 
 const TasksList: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -44,11 +17,11 @@ const TasksList: React.FC = () => {
     selectVisibleTasks(state, activeFilter)
   );
 
-  const handleDeleteTask = (id: number) => {
+  const handleDeleteTask = (id: string) => {
     dispatch(deleteTask(id));
   };
 
-  const handleToggleTaskStatus = (id: number) => {
+  const handleToggleTaskStatus = (id: string) => {
     dispatch(toggleStatus(id));
   };
 
@@ -57,21 +30,17 @@ const TasksList: React.FC = () => {
     const targetCommand = getCommand(event.target as HTMLElement);
     switch (targetCommand) {
       case "toggle":
-        console.log("toggle");
-        console.log(targetTaskId);
-
-        handleToggleTaskStatus(Number(targetTaskId));
+        handleToggleTaskStatus(targetTaskId);
         break;
       case "delete":
-        console.log("delete");
-        handleDeleteTask(Number(targetTaskId));
+        handleDeleteTask(targetTaskId);
         break;
     }
   };
 
   const listItems = tasksList.map((task) => {
     const labelId = `checkbox-list-label-${task.id}`;
-    const textDecoration = task.status ? "line-through" : "none";
+    const textDecoration = task.isDone ? "line-through" : "none";
 
     return (
       <Task
@@ -102,4 +71,26 @@ const TasksList: React.FC = () => {
 };
 
 export default TasksList;
+//---
+
+//helpers
+const getId = (target: HTMLElement): string => {
+  const element = target;
+  const elementId = element.dataset.id;
+
+  if (elementId) {
+    return elementId;
+  }
+  return getId(element.parentNode as HTMLElement);
+};
+//---
+const getCommand = (target: HTMLElement): string => {
+  const element = target;
+  const elementCommand = element.dataset.command;
+
+  if (elementCommand) {
+    return elementCommand;
+  }
+  return getCommand(element.parentNode as HTMLElement);
+};
 //---

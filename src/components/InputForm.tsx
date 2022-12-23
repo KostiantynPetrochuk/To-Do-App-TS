@@ -1,19 +1,14 @@
-import { FormEvent } from "react";
-import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../hooks";
-
-import { addTask } from "../store/actions/tasksActions";
-import { selectAllTasks } from "../store/selectors/tasksSelectors";
-import { Notice } from "./Notice";
+import { useState, FormEvent } from "react";
 
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
-import { THandleClose } from "./Notice";
-
-import { StateType } from "../types/types";
-import { TaskType } from "../types/types";
+import { addTask } from "../store/actions/tasksActions";
+import { selectAllTasks } from "../store/selectors/tasksSelectors";
+import { Notice, THandleClose } from "./Notice";
+import { useAppDispatch, useAppSelector } from "../hooks";
+import { TaskType, StateType } from "../types/types";
 
 const InputForm: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -34,11 +29,12 @@ const InputForm: React.FC = () => {
     event.currentTarget.reset();
   };
 
-  const tasksList: Array<TaskType> = useAppSelector((state: StateType) => selectAllTasks((state)));
+  const tasksList: Array<TaskType> = useAppSelector((state: StateType) =>
+    selectAllTasks(state)
+  );
 
   const storeTasks = { tasks: tasksList };
   const handleSaveTasks = (): void => {
-
     try {
       const stateToBeSaved: string = JSON.stringify(storeTasks);
       localStorage.setItem("state", stateToBeSaved);
@@ -85,27 +81,23 @@ const InputForm: React.FC = () => {
     <Box
       component="form"
       sx={{
-        "& > :not(style)": { m: 1, },
+        "& > :not(style)": { m: 1 },
       }}
       noValidate
       autoComplete="off"
-      onSubmit={handleSubmit} >
+      onSubmit={handleSubmit}
+    >
       <TextField
         id="outlined-basic"
         label="New Task"
         variant="outlined"
-        name='body'
-        fullWidth />
-      <Button
-        type='submit'
-        variant="contained"
-        sx={{ marginTop: 50 }}>
+        name="body"
+        fullWidth
+      />
+      <Button type="submit" variant="contained" sx={{ marginTop: 50 }}>
         Add
-      </ Button>
-      <Button
-        variant="contained"
-        color="success"
-        onClick={handleSaveTasks}>
+      </Button>
+      <Button variant="contained" color="success" onClick={handleSaveTasks}>
         Save
       </Button>
 
@@ -129,7 +121,7 @@ const InputForm: React.FC = () => {
         noticeBody="The body of the task should be between 5 and 30 characters!"
         severity="warning"
       />
-    </Box >
+    </Box>
   );
 };
 

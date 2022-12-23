@@ -1,5 +1,3 @@
-import { TaskType } from "../types/types";
-
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -7,6 +5,8 @@ import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
+
+import { TaskType } from "../types/types";
 
 type TaskPropType = {
   task: TaskType;
@@ -22,33 +22,20 @@ const Task: React.FC<TaskPropType> = (props) => {
       key={task.id}
       data-id={task.id}
       secondaryAction={
-        <IconButton
-          edge="end"
-          aria-label="comments"
-          data-command="delete"
-          // onClick={() => dispatch(deleteTask(task.id))}
-        >
+        <IconButton edge="end" aria-label="comments" data-command="delete">
           <DeleteIcon />
         </IconButton>
       }
       disablePadding
     >
-      <ListItemButton
-        role={undefined}
-        data-command="toggle"
-        // onClick={handleToggle(task.id)}
-        dense
-      >
+      <ListItemButton role={undefined} data-command="toggle" dense>
         <ListItemIcon>
           <Checkbox
             edge="start"
-            checked={task.status || false}
+            checked={task.isDone || false}
             tabIndex={-1}
             disableRipple
-            // inputProps={{ "aria-labelledby": labelId }}
             inputProps={{ "aria-label": "controlled" }}
-            // onChange={() => dispatch(toggleStatus(task.id))}
-            // onClick={() => dispatch(toggleStatus(task.id))}
           />
         </ListItemIcon>
         <ListItemText

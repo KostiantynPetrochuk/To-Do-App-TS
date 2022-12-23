@@ -1,32 +1,41 @@
-// import { ADD_TASK, DELETE_TASK, TOGGLE_STATUS } from "../constants/tasksConst";
-import { TaskType } from "../../types/types";
-// import {
-//   AddTaskActionType,
-//   ToggleStatusActionType,
-//   DeleteTaskActionType,
-// } from "../actions/tasksActions";
-import { addTask, toggleStatus, deleteTask } from "../actions/tasksActions";
 import { createReducer } from "@reduxjs/toolkit";
+
+import { TaskType } from "../../types/types";
+import { addTask, toggleStatus, deleteTask } from "../actions/tasksActions";
+import { ADD_TASK, TOGGLE_STATUS, DELETE_TASK } from "../constants/tasksConst";
 
 const initialState: Array<TaskType> = [];
 
-// type TasksReducerActionTypes =
-//   | AddTaskActionType
-//   | ToggleStatusActionType
-//   | DeleteTaskActionType;
+type TasksReducerActionType = {
+  payload: TaskType;
+  type: typeof ADD_TASK;
+};
+
+type ToggleStatusActionType = {
+  payload: { id: string };
+  type: typeof TOGGLE_STATUS;
+};
+
+type DeleteTaskAactionType = {
+  payload: { id: string };
+  type: typeof DELETE_TASK;
+};
 
 export const tasksReducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(addTask, (state, action) => {
+    .addCase(addTask, (state: TaskType[], action: TasksReducerActionType) => {
       state.push(action.payload);
     })
-    .addCase(toggleStatus, (state, action) => {
-      const id: number = action.payload.id;
-      const task: TaskType = state.find((task) => task.id === id)!;
-      task.status = !task.status;
-    })
-    .addCase(deleteTask, (state, action) => {
-      const id: number = action.payload.id;
+    .addCase(
+      toggleStatus,
+      (state: TaskType[], action: ToggleStatusActionType) => {
+        const id: string = action.payload.id;
+        const task: TaskType = state.find((task) => task.id === id)!;
+        task.isDone = !task.isDone;
+      }
+    )
+    .addCase(deleteTask, (state: TaskType[], action: DeleteTaskAactionType) => {
+      const id: string = action.payload.id;
       return state.filter((task) => task.id !== id);
     });
 });

@@ -1,11 +1,9 @@
-import { TaskType } from "../../types/types";
-import { StateType } from "../../types/types";
-import { FiltersType } from "../../types/types";
+import { TaskType, StateType, FiltersType } from "../../types/types";
 
 export const selectAllTasks = (state: StateType) => state.tasks;
 
 export const selectActiveTasks = (state: StateType) =>
-  state.tasks.filter((task: TaskType) => !task.status);
+  state.tasks.filter((task: TaskType) => !task.isDone);
 
 export const selectVisibleTasks = (state: StateType, filter: FiltersType) => {
   switch (filter) {
@@ -13,10 +11,10 @@ export const selectVisibleTasks = (state: StateType, filter: FiltersType) => {
       return state.tasks;
     }
     case "active": {
-      return state.tasks.filter((task: TaskType) => !task.status);
+      return state.tasks.filter((task: TaskType) => !task.isDone);
     }
     case "completed": {
-      return state.tasks.filter((task: TaskType) => task.status);
+      return state.tasks.filter((task: TaskType) => task.isDone);
     }
 
     default: {

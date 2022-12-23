@@ -1,11 +1,11 @@
+import { useState } from "react";
+
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Divider from "@mui/material/Divider";
 
-import { useState } from "react";
 import { useAppDispatch } from "../hooks";
-
 import { setFilter } from "../store/actions/filtersActions";
 
 const NavBar: React.FC = () => {

@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+
 import { loadState } from "./localStorage";
 import { rootReducer } from "./reducers/index";
 

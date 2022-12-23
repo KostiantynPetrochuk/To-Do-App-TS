@@ -1,13 +1,12 @@
 export type TaskType = {
-  id: number;
+  id: string;
   body: string;
-  status: boolean;
-}
+  isDone: boolean;
+};
 
 export type FiltersType = "all" | "active" | "completed";
 
 export type StateType = {
   tasks: Array<TaskType>;
   filters: FiltersType;
-}
-
+};
