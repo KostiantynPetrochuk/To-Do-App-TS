@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import { useCallback } from "react";
 
 import List from "@mui/material/List";
 
@@ -17,15 +17,15 @@ const TasksList: React.FC = () => {
     selectVisibleTasks(state, activeFilter)
   );
 
-  const handleDeleteTask = (id: string) => {
+  const handleDeleteTask = useCallback((id: string) => {
     dispatch(deleteTask(id));
-  };
+  }, []);
 
-  const handleToggleTaskStatus = (id: string) => {
+  const handleToggleTaskStatus = useCallback((id: string) => {
     dispatch(toggleStatus(id));
-  };
+  }, []);
 
-  const handleListClick = (event: React.MouseEvent) => {
+  const handleListClick = useCallback((event: React.MouseEvent) => {
     const targetTaskId = getId(event.target as HTMLElement);
     const targetCommand = getCommand(event.target as HTMLElement);
     switch (targetCommand) {
@@ -36,7 +36,7 @@ const TasksList: React.FC = () => {
         handleDeleteTask(targetTaskId);
         break;
     }
-  };
+  }, []);
 
   const listItems = tasksList.map((task) => {
     const labelId = `checkbox-list-label-${task.id}`;

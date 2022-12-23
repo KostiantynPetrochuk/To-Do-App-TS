@@ -1,4 +1,4 @@
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useCallback, SyntheticEvent } from "react";
 
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -6,9 +6,16 @@ import Button from "@mui/material/Button";
 
 import { addTask } from "../store/actions/tasksActions";
 import { selectAllTasks } from "../store/selectors/tasksSelectors";
-import { Notice, THandleClose } from "./Notice";
+import { Notice } from "./Notice";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { TaskType, StateType } from "../types/types";
+
+type MessageHandlerReasonType = string | undefined;
+
+type MessageHandlerEventType =
+  | Event
+  | SyntheticEvent<Element, Event>
+  | undefined;
 
 const InputForm: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -16,25 +23,29 @@ const InputForm: React.FC = () => {
   const [openSaveSuccess, setOpenSaveSuccess] = useState<boolean>(false);
   const [openWarning, setOpenWarning] = useState<boolean>(false);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
-    event.preventDefault();
-    const taskBody: string = event.currentTarget.body.value.trim();
-    if (taskBody.length >= 5 && taskBody.length <= 30) {
-      dispatch(addTask(taskBody));
-      handleOpenAddSuccess();
-    } else {
-      handleOpenWarning();
-    }
+  const handleSubmit = useCallback(
+    (event: FormEvent<HTMLFormElement>): void => {
+      event.preventDefault();
+      const taskBody: string = event.currentTarget.body.value.trim();
+      if (taskBody.length >= 5 && taskBody.length <= 30) {
+        dispatch(addTask(taskBody));
+        handleOpenAddSuccess();
+      } else {
+        handleOpenWarning();
+      }
 
-    event.currentTarget.reset();
-  };
+      event.currentTarget.reset();
+    },
+    []
+  );
 
   const tasksList: Array<TaskType> = useAppSelector((state: StateType) =>
     selectAllTasks(state)
   );
 
   const storeTasks = { tasks: tasksList };
-  const handleSaveTasks = (): void => {
+
+  const handleSaveTasks = useCallback((): void => {
     try {
       const stateToBeSaved: string = JSON.stringify(storeTasks);
       localStorage.setItem("state", stateToBeSaved);
@@ -42,40 +53,53 @@ const InputForm: React.FC = () => {
     } catch (error) {
       console.error(error);
     }
-  };
+  }, []);
+
   //--------------messages-add-success-------------------
-  const handleOpenAddSuccess = (): void => {
+  const handleOpenAddSuccess = useCallback((): void => {
     setOpenAddSuccess(true);
-  };
+  }, []);
 
-  const handleCloseAddSuccess: THandleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpenAddSuccess(false);
-  };
+  const handleCloseAddSuccess = useCallback(
+    (event: MessageHandlerEventType, reason: MessageHandlerReasonType) => {
+      if (reason === "clickaway") {
+        return;
+      }
+      setOpenAddSuccess(false);
+    },
+    []
+  );
+
   //-------------messages-save-success---------------------
-  const handleOpenSaveSuccess = (): void => {
+
+  const handleOpenSaveSuccess = useCallback((): void => {
     setOpenSaveSuccess(true);
-  };
+  }, []);
 
-  const handleCloseSaveSuccess: THandleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpenSaveSuccess(false);
-  };
+  const handleCloseSaveSuccess = useCallback(
+    (event: MessageHandlerEventType, reason: MessageHandlerReasonType) => {
+      if (reason === "clickaway") {
+        return;
+      }
+      setOpenSaveSuccess(false);
+    },
+    []
+  );
+
   //--------------warning-message--------------------------
-  const handleOpenWarning = (): void => {
+  const handleOpenWarning = useCallback((): void => {
     setOpenWarning(true);
-  };
+  }, []);
 
-  const handleCloseWarning: THandleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpenWarning(false);
-  };
+  const handleCloseWarning = useCallback(
+    (event: MessageHandlerEventType, reason: MessageHandlerReasonType) => {
+      if (reason === "clickaway") {
+        return;
+      }
+      setOpenWarning(false);
+    },
+    []
+  );
 
   return (
     <Box

@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -14,7 +16,7 @@ type TaskPropType = {
   textDecoration: "line-through" | "none";
 };
 
-const Task: React.FC<TaskPropType> = (props) => {
+const Task = memo(function Task(props: TaskPropType) {
   const { task, labelId, textDecoration } = props;
 
   return (
@@ -46,6 +48,6 @@ const Task: React.FC<TaskPropType> = (props) => {
       </ListItemButton>
     </ListItem>
   );
-};
+});
 
 export default Task;
