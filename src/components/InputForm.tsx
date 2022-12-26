@@ -53,7 +53,7 @@ const InputForm: React.FC = () => {
     } catch (error) {
       console.error(error);
     }
-  }, []);
+  }, [storeTasks]);
 
   //--------------messages-add-success-------------------
   const handleOpenAddSuccess = useCallback((): void => {
