@@ -7,14 +7,14 @@ import { selectVisibleTasks } from "../store/selectors/tasksSelectors";
 import { selectActiveFilter } from "../store/selectors/filterSelectors";
 import { deleteTask, toggleStatus } from "../store/actions/tasksActions";
 import { Alert } from "./Notice";
-import { FiltersType, TaskType, StateType } from "../types";
+import { TaskType, StateType, ActiveFilterType } from "../types";
 import Task from "./Task";
 
 const TasksList: React.FC = () => {
   const dispatch = useAppDispatch();
-  const activeFilter: FiltersType = useAppSelector(selectActiveFilter);
+  const activeFilter: ActiveFilterType = useAppSelector(selectActiveFilter);
   const tasksList: Array<TaskType> = useAppSelector((state: StateType) =>
-    selectVisibleTasks(state, activeFilter),
+    selectVisibleTasks(state, activeFilter.filter),
   );
 
   const handleDeleteTask = useCallback((id: string) => {
