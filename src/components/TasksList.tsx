@@ -7,7 +7,7 @@ import { selectVisibleTasks } from "../store/selectors/tasksSelectors";
 import { selectActiveFilter } from "../store/selectors/filterSelectors";
 import { deleteTask, toggleStatus } from "../store/actions/tasksActions";
 import { Alert } from "./Notice";
-import { FiltersType, TaskType, StateType } from "../types/types";
+import { FiltersType, TaskType, StateType } from "../types";
 import Task from "./Task";
 
 const TasksList: React.FC = () => {

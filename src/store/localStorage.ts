@@ -1,4 +1,4 @@
-import { TaskType } from "../types/types";
+import { TaskType } from "../types";
 
 type LoadStateReturnType = {
   tasks: Array<TaskType>;

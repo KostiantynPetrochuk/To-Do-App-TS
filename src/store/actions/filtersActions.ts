@@ -1,5 +1,5 @@
 import { SET_FILTER } from "../constants/filtersConst";
-import { FiltersType } from "../../types/types";
+import { FiltersType } from "../../types";
 
 export type SetFilterActionType = {
   type: typeof SET_FILTER;

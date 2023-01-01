@@ -1,6 +1,6 @@
 import { SET_FILTER } from "../constants/filtersConst";
 import { SetFilterActionType } from "../actions/filtersActions";
-import { FiltersType } from "../../types/types";
+import { FiltersType } from "../../types";
 
 const initialState: FiltersType = "all";
 

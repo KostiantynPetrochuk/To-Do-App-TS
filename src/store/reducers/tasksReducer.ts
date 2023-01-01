@@ -1,6 +1,6 @@
 import { createReducer } from "@reduxjs/toolkit";
 
-import { TaskType } from "../../types/types";
+import { TaskType } from "../../types";
 import { addTask, toggleStatus, deleteTask } from "../actions/tasksActions";
 import { ADD_TASK, TOGGLE_STATUS, DELETE_TASK } from "../constants/tasksConst";
 

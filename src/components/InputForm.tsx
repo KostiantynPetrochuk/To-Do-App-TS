@@ -8,7 +8,7 @@ import { addTask } from "../store/actions/tasksActions";
 import { selectAllTasks } from "../store/selectors/tasksSelectors";
 import { Notice } from "./Notice";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { TaskType, StateType } from "../types/types";
+import { TaskType, StateType } from "../types";
 
 type MessageHandlerReasonType = string | undefined;
 
