@@ -16,7 +16,7 @@ const NavBar: React.FC = () => {
     (event: React.SyntheticEvent<Element, Event>, newValue: number): void => {
       setValue(newValue);
     },
-    []
+    [],
   );
 
   const handleShowAllTasks = useCallback(() => {

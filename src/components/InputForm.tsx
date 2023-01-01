@@ -12,10 +12,7 @@ import { TaskType, StateType } from "../types/types";
 
 type MessageHandlerReasonType = string | undefined;
 
-type MessageHandlerEventType =
-  | Event
-  | SyntheticEvent<Element, Event>
-  | undefined;
+type MessageHandlerEventType = Event | SyntheticEvent<Element, Event> | undefined;
 
 const InputForm: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -23,25 +20,20 @@ const InputForm: React.FC = () => {
   const [openSaveSuccess, setOpenSaveSuccess] = useState<boolean>(false);
   const [openWarning, setOpenWarning] = useState<boolean>(false);
 
-  const handleSubmit = useCallback(
-    (event: FormEvent<HTMLFormElement>): void => {
-      event.preventDefault();
-      const taskBody: string = event.currentTarget.body.value.trim();
-      if (taskBody.length >= 5 && taskBody.length <= 30) {
-        dispatch(addTask(taskBody));
-        handleOpenAddSuccess();
-      } else {
-        handleOpenWarning();
-      }
+  const handleSubmit = useCallback((event: FormEvent<HTMLFormElement>): void => {
+    event.preventDefault();
+    const taskBody: string = event.currentTarget.body.value.trim();
+    if (taskBody.length >= 5 && taskBody.length <= 30) {
+      dispatch(addTask(taskBody));
+      handleOpenAddSuccess();
+    } else {
+      handleOpenWarning();
+    }
 
-      event.currentTarget.reset();
-    },
-    []
-  );
+    event.currentTarget.reset();
+  }, []);
 
-  const tasksList: Array<TaskType> = useAppSelector((state: StateType) =>
-    selectAllTasks(state)
-  );
+  const tasksList: Array<TaskType> = useAppSelector((state: StateType) => selectAllTasks(state));
 
   const storeTasks = { tasks: tasksList };
 
@@ -67,7 +59,7 @@ const InputForm: React.FC = () => {
       }
       setOpenAddSuccess(false);
     },
-    []
+    [],
   );
 
   //-------------messages-save-success---------------------
@@ -83,7 +75,7 @@ const InputForm: React.FC = () => {
       }
       setOpenSaveSuccess(false);
     },
-    []
+    [],
   );
 
   //--------------warning-message--------------------------
@@ -98,7 +90,7 @@ const InputForm: React.FC = () => {
       }
       setOpenWarning(false);
     },
-    []
+    [],
   );
 
   return (
@@ -111,13 +103,7 @@ const InputForm: React.FC = () => {
       autoComplete="off"
       onSubmit={handleSubmit}
     >
-      <TextField
-        id="outlined-basic"
-        label="New Task"
-        variant="outlined"
-        name="body"
-        fullWidth
-      />
+      <TextField id="outlined-basic" label="New Task" variant="outlined" name="body" fullWidth />
       <Button type="submit" variant="contained" sx={{ marginTop: 50 }}>
         Add
       </Button>

@@ -26,14 +26,11 @@ export const tasksReducer = createReducer(initialState, (builder) => {
     .addCase(addTask, (state: TaskType[], action: TasksReducerActionType) => {
       state.push(action.payload);
     })
-    .addCase(
-      toggleStatus,
-      (state: TaskType[], action: ToggleStatusActionType) => {
-        const id: string = action.payload.id;
-        const task: TaskType = state.find((task) => task.id === id)!;
-        task.isDone = !task.isDone;
-      }
-    )
+    .addCase(toggleStatus, (state: TaskType[], action: ToggleStatusActionType) => {
+      const id: string = action.payload.id;
+      const task: TaskType = state.find((task) => task.id === id)!;
+      task.isDone = !task.isDone;
+    })
     .addCase(deleteTask, (state: TaskType[], action: DeleteTaskAactionType) => {
       const id: string = action.payload.id;
       return state.filter((task) => task.id !== id);

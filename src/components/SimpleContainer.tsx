@@ -7,13 +7,12 @@ import InputForm from "./InputForm";
 import NavBar from "./NavBar";
 import TasksList from "./TasksList";
 
-
 const SimpleContainer: React.FC = () => {
   return (
     <>
       <CssBaseline />
-      <Container maxWidth="sm" >
-        <Box sx={{ height: "100vh" }} >
+      <Container maxWidth="sm">
+        <Box sx={{ height: "100vh" }}>
           <Title />
           <InputForm />
           <NavBar />
