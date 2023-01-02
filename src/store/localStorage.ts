@@ -1,8 +1,8 @@
-import { TaskType } from "../types/types";
+import { TaskType } from "../types";
 
 type LoadStateReturnType = {
-	tasks: Array<TaskType>;
-}
+  tasks: Array<TaskType>;
+};
 
 export const loadState = (): LoadStateReturnType => {
   try {
@@ -13,7 +13,6 @@ export const loadState = (): LoadStateReturnType => {
     }
 
     return JSON.parse(savedState);
-
   } catch (error) {
     console.log(error);
     return { tasks: [] };

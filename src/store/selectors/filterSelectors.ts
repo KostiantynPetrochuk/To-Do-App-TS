@@ -1,4 +1,3 @@
-import { FiltersType, StateType } from "../../types/types";
+import { ActiveFilterType, StateType } from "../../types";
 
-export const selectActiveFilter = (state: StateType): FiltersType => state.filters;
-
+export const selectActiveFilter = (state: StateType): ActiveFilterType => state.filters;

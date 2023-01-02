@@ -14,26 +14,15 @@ type TNoticeProps = {
   severity: AlertColor | undefined;
 };
 
-export const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
-  props,
-  ref
-) {
+export const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
 export const Notice: React.FC<TNoticeProps> = (props: TNoticeProps) => {
   const { openNotice, handleCloseNotice, noticeBody, severity } = props;
   return (
-    <Snackbar
-      open={openNotice}
-      autoHideDuration={6000}
-      onClose={handleCloseNotice}
-    >
-      <Alert
-        onClose={handleCloseNotice}
-        severity={severity}
-        sx={{ width: "100%" }}
-      >
+    <Snackbar open={openNotice} autoHideDuration={6000} onClose={handleCloseNotice}>
+      <Alert onClose={handleCloseNotice} severity={severity} sx={{ width: "100%" }}>
         {noticeBody}
       </Alert>
     </Snackbar>

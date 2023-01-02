@@ -7,14 +7,14 @@ import { selectVisibleTasks } from "../store/selectors/tasksSelectors";
 import { selectActiveFilter } from "../store/selectors/filterSelectors";
 import { deleteTask, toggleStatus } from "../store/actions/tasksActions";
 import { Alert } from "./Notice";
-import { FiltersType, TaskType, StateType } from "../types/types";
+import { TaskType, StateType, ActiveFilterType } from "../types";
 import Task from "./Task";
 
 const TasksList: React.FC = () => {
   const dispatch = useAppDispatch();
-  const activeFilter: FiltersType = useAppSelector(selectActiveFilter);
+  const activeFilter: ActiveFilterType = useAppSelector(selectActiveFilter);
   const tasksList: Array<TaskType> = useAppSelector((state: StateType) =>
-    selectVisibleTasks(state, activeFilter)
+    selectVisibleTasks(state, activeFilter.filter),
   );
 
   const handleDeleteTask = useCallback((id: string) => {
@@ -42,22 +42,12 @@ const TasksList: React.FC = () => {
     const labelId = `checkbox-list-label-${task.id}`;
     const textDecoration = task.isDone ? "line-through" : "none";
 
-    return (
-      <Task
-        key={task.id}
-        task={task}
-        labelId={labelId}
-        textDecoration={textDecoration}
-      />
-    );
+    return <Task key={task.id} task={task} labelId={labelId} textDecoration={textDecoration} />;
   });
 
   if (tasksList.length > 0) {
     return (
-      <List
-        sx={{ width: "100%", bgcolor: "background.paper" }}
-        onClick={handleListClick}
-      >
+      <List sx={{ width: "100%", bgcolor: "background.paper" }} onClick={handleListClick}>
         {listItems}
       </List>
     );

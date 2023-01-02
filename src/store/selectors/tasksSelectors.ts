@@ -1,4 +1,4 @@
-import { TaskType, StateType, FiltersType } from "../../types/types";
+import { TaskType, StateType, FiltersType } from "../../types";
 
 export const selectAllTasks = (state: StateType) => state.tasks;
 

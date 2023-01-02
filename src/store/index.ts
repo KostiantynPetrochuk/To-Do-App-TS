@@ -8,8 +8,8 @@ const persistedState = loadState();
 export const store = configureStore({
   reducer: rootReducer,
   preloadedState: {
-    tasks: persistedState.tasks
-  }
+    tasks: persistedState.tasks,
+  },
 });
 
 export type RootState = ReturnType<typeof store.getState>;

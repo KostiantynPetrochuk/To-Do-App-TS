@@ -1,20 +1,19 @@
 import { SET_FILTER } from "../constants/filtersConst";
-import { SetFilterActionType } from "../actions/filtersActions";
-import { FiltersType } from "../../types/types";
+import { setFilter } from "../actions/filtersActions";
+import { ActiveFilterType, FiltersType } from "../../types";
+import { createReducer } from "@reduxjs/toolkit";
 
-const initialState: FiltersType = "all";
+const initialState: ActiveFilterType = { filter: "all" };
 
-export const filtersReducer = (
-  state = initialState,
-  action: SetFilterActionType
-) => {
-  switch (action.type) {
-    case SET_FILTER: {
-      return action.filter;
-    }
-
-    default: {
-      return state;
-    }
-  }
+type FiltersReducerActionType = {
+  payload: {
+    filter: FiltersType;
+  };
+  type: typeof SET_FILTER;
 };
+
+export const filtersReducer = createReducer(initialState, (builder) => {
+  builder.addCase(setFilter, (_state: ActiveFilterType, action: FiltersReducerActionType) => {
+    return action.payload;
+  });
+});
